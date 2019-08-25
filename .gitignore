@@ -1,0 +1,14 @@
+node_modules/*
+uploads/*
+creds.data
+tailor/db/*
+tailor/node_modules/*
+apd.xml
+.DS_Store
+build/
+.idea
+.gradle
+local.properties
+*.iml
+exports/*
+.env
