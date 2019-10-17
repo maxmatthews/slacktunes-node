@@ -6,7 +6,7 @@ const Application = require("jxa").Application;
 const iTunes = Application("Music");
 const moment = require("moment");
 
-const path = __dirname + "/shouldClear.txt";
+const path = __dirname + "/trackInfo.txt";
 
 require("dotenv").config({
 	path: "/Users/maxmatthews/Developer/slacktunes-node/.env"
@@ -19,8 +19,10 @@ setInterval(() => {
 		const name = iTunes.currentTrack.name();
 		const artist = iTunes.currentTrack.artist();
 		const album = iTunes.currentTrack.album();
+		const duration = iTunes.currentTrack.duration();
+		const currentPosition = iTunes.playerPosition();
 		const state = iTunes.playerState();
-		data = { name, artist, album, state };
+		data = { name, artist, album, state, duration, currentPosition };
 	} catch (e) {
 		console.log(e);
 		data = { name: null };
@@ -45,7 +47,8 @@ setInterval(() => {
 			.replace(/\(|\)|\?|\+|\&/g, "");
 
 		const expire = moment()
-			.add(62, "seconds")
+			.add(data.duration, "seconds")
+			.subtract(data.currentPosition, "seconds")
 			.format("X");
 
 		for (const [key, value] of Object.entries(process.env)) {
