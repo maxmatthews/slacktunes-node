@@ -7,6 +7,7 @@
     "dotenv": "^6.0.0",
     "encodeurl": "^1.0.2",
     "jxa": "wtfaremyinitials/jxa#pull/5/head",
+    "moment": "^2.24.0",
     "request": "^2.87.0"
   }
 }
