@@ -6,7 +6,7 @@
   "dependencies": {
     "dotenv": "^6.0.0",
     "encodeurl": "^1.0.2",
-    "playback": "^0.2.0",
+    "jxa": "wtfaremyinitials/jxa#pull/5/head",
     "request": "^2.87.0"
   }
 }
