@@ -16,19 +16,23 @@ setInterval(() => {
 	// console.log("hit");
 	let data;
 	try {
-		const name = iTunes.currentTrack.name();
-		const artist = iTunes.currentTrack.artist();
-		const album = iTunes.currentTrack.album();
-		const duration = iTunes.currentTrack.duration();
-		const currentPosition = iTunes.playerPosition();
 		const state = iTunes.playerState();
-		data = { name, artist, album, state, duration, currentPosition };
+		if (state && state === "playing") {
+			const name = iTunes.currentTrack.name();
+			const artist = iTunes.currentTrack.artist();
+			const album = iTunes.currentTrack.album();
+			data = { name, artist, album, state };
+		} else {
+			data = { name: null };
+		}
 	} catch (e) {
 		console.log(e);
 		data = { name: null };
 	}
 	// console.log(data.state);
 	if (data.name && data.state === "playing") {
+		const duration = iTunes.currentTrack.duration();
+		const currentPosition = iTunes.playerPosition();
 		if (data.artist.length > 25) {
 			data.artist = data.artist.substring(0, 20) + "...";
 		}
@@ -47,8 +51,8 @@ setInterval(() => {
 			.replace(/\(|\)|\?|\+|\&/g, "");
 
 		const expire = moment()
-			.add(data.duration, "seconds")
-			.subtract(data.currentPosition, "seconds")
+			.add(duration + 60.1, "seconds")
+			.subtract(currentPosition, "seconds")
 			.format("X");
 
 		for (const [key, value] of Object.entries(process.env)) {
