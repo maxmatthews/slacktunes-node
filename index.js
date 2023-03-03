@@ -11,7 +11,8 @@ require("dotenv").config({
 });
 
 setInterval(async () => {
-	// (async () => { //immediate run for debug
+	// (async () => { 	//immediate run for debug
+
 	let data;
 	try {
 		const state = iTunes.playerState();
@@ -56,33 +57,12 @@ setInterval(async () => {
 		for (const [key, value] of Object.entries(process.env)) {
 			if (key.includes("SLACK_TOKEN")) {
 				const res = await fetch(
-					`https://slack.com/api/users.profile.set?token=${value}&profile=%7B%22status_emoji%22%3A%22:headphones:%22%2C%22status_text%22%3A%22${trackInfo}%22,"status_expiration":${expire}%7D`,
-					{ method: "POST" }
+					`https://slack.com/api/users.profile.set?profile=%7B%22status_emoji%22%3A%22:headphones:%22%2C%22status_text%22%3A%22${trackInfo}%22,"status_expiration":${expire}%7D`,
+					{ method: "POST", headers: { Authorization: `Bearer ${value}` } }
 				);
-				// console.log(await res.text());
+				console.log(await res.text());
 			}
 		}
 	}
 	// })(); //immediate run for debug
-
-	//  else {
-	// if (fs.existsSync(path)) {
-	// 	for (const [key, value] of Object.entries(process.env)) {
-	// 		if (key.includes("SLACK_TOKEN")) {
-	// 			request({
-	// 				url: `https://slack.com/api/users.profile.set?token=${
-	// 					process.env.SLACK_TOKEN
-	// 				}&profile=%7B%22status_emoji%22%3A%22%22%2C%22status_text%22%3A%22%22%7D`,
-	// 				method: "POST"
-	// 			}).on("response", () => {
-	// 				fs.unlinkSync(path);
-	//
-	// 				// process.exit();
-	// 			});
-	// 		}
-	// 	}
-	// } else {
-	// 	// process.exit(); //the status was already cleared, so we don't have to do it, just end the script
-	// }
-	// }
 }, 1000 * 60);
