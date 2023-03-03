@@ -1,4 +1,3 @@
-const request = require("request");
 const encodeurl = require("encodeurl");
 // const fs = require("fs");
 const Application = require("jxa").Application;
